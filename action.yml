@@ -1,10 +1,11 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
-inputs:
-  myInput:              # change this
-    description: 'input description here'
-    default: 'default value if applicable'
+name: 'Action release gem'
+description: 'Release a gem'
+author: 'loosecplg'
+
+#inputs:
+  #tag-name:
+  #  description: 'The name of the tag to create'
+
 runs:
   using: 'node12'
   main: 'lib/main.js'
