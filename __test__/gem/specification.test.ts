@@ -4,7 +4,7 @@ import { Specification } from "../../src/gem/specification";
 describe("Specification", () => {
   describe("find()", () => {
     beforeEach(() => {
-      fs.writeFileSync("_testgem_.gemspec", "Gem::Specification.new");
+      fs.writeFileSync("_testgem_.gemspec", "Gem::Specification.new { |s| s.version = '1.2.3' }");
       fs.writeFileSync("_testgem_other_.gemspec", "Gem::Specification.new");
     });
 
@@ -17,6 +17,7 @@ describe("Specification", () => {
       const spec = Specification.find();
 
       expect(spec.gemspecPath).toBe("_testgem_.gemspec")
+      expect(spec.version).toBe("1.2.3");
     });
   });
 });
