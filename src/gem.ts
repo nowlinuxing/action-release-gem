@@ -1,5 +1,6 @@
 import { Specification } from './gem/specification';
 import * as version from './gem/version';
+import * as BuildCommand from './gem/commands/build_command';
 
 export class Gem {
   public specification: Specification;
@@ -18,6 +19,15 @@ export class Gem {
       return true;
     } else {
       return version.compare(myVer, remoteGemVer) > 0;
+    }
+  }
+
+  public build(): boolean {
+    if (this.specification.gemspecPath == null) {
+      return false;
+    } else {
+      BuildCommand.build(this.specification.gemspecPath);
+      return true;
     }
   }
 }
