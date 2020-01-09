@@ -1,6 +1,7 @@
 import { Specification } from './gem/specification';
 import * as version from './gem/version';
 import * as BuildCommand from './gem/commands/build_command';
+import * as PushCommand from './gem/commands/push_command';
 
 export class Gem {
   public specification: Specification;
@@ -29,5 +30,18 @@ export class Gem {
       BuildCommand.build(this.specification.gemspecPath);
       return true;
     }
+  }
+
+  public push(processEnv = process.env): boolean {
+    const gemPath = this.specification.gemFileName();
+    if (gemPath == null) {
+      return false;
+    }
+
+    const homeDir = processEnv.HOME || "";
+    const apiKey  = processEnv.GEM_HOST_API_KEY || "";
+
+    PushCommand.push(homeDir, apiKey, gemPath);
+    return true;
   }
 }
