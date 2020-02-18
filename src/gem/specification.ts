@@ -31,4 +31,16 @@ export class Specification {
 
     return JSON.parse(json);
   }
+
+  public isValid(): boolean {
+    return (this.name != null && this.version != null)
+  }
+
+  public gemFileName(): string | null {
+    if(this.isValid()) {
+      return `${this.name || ""}-${this.version || ""}.gem`
+    } else {
+      return null;
+    }
+  }
 }
