@@ -1,14 +1,45 @@
-# Create a JavaScript Action using TypeScript
+# action-release-gem
 
-Use this template to bootstrap the creation of a JavaScript action.:rocket:
+Release your gem automatically.
 
-This template includes compilication support, tests, a validation workflow, publishing, and versioning guidance.  
+* Create a tag on your github repository in GitHub
+* Build a gem and push to rubygems.org
 
-If you are new, there's also a simpler introduction.  See the [Hello World JavaScript Action](https://github.com/actions/hello-world-javascript-action)
+## Usage
 
-## Create an action from this template
+```yaml
+# .github/workflows/release_gem.yml
+on:
+  push:
+    branches:
+      - master
 
-Click the `Use this Template` and provide the new repo details for your action
+jobs:
+  build:
+    name: Build + Publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+
+      # Require ruby to execute gem command
+      - name: Set up Ruby 2.6
+        uses: actions/setup-ruby@v1
+        with:
+          version: 2.6.x
+
+      - name: Create a tag and release to rubygems.org
+        uses: nowlinuxing/action-release-gem@v1
+        env:
+          GEM_HOST_API_KEY: ${{secrets.RUBYGEMS_AUTH_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+```
+
+```sh
+$ git add lib/yourgem/version.rb
+$ git commit -m 'Bump version'
+$ git push origin master
+```
 
 ## Code in Master
 
@@ -33,36 +64,6 @@ $ npm test
 
 ...
 ```
-
-## Change action.yml
-
-The action.yml contains defines the inputs and output for your action.
-
-Update the action.yml with your name, description, inputs and outputs for your action.
-
-See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
-
-## Change the Code
-
-Most toolkit and CI/CD operations involve async operations so the action is run in an async function.
-
-```javascript
-import * as core from '@actions/core';
-...
-
-async function run() {
-  try { 
-      ...
-  } 
-  catch (error) {
-    core.setFailed(error.message);
-  }
-}
-
-run()
-```
-
-See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/README.md#packages) for the various packages.
 
 ## Publish to a distribution branch
 
@@ -95,7 +96,7 @@ See the [versioning documentation](https://github.com/actions/toolkit/blob/maste
 You can now validate the action by referencing the releases/v1 branch
 
 ```yaml
-uses: actions/typescript-action@releases/v1
+uses: actions/action-release-gem@releases/v1
 with:
   milliseconds: 1000
 ```
@@ -107,7 +108,7 @@ See the [actions tab](https://github.com/actions/javascript-action/actions) for 
 After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) to reference the stable and tested action
 
 ```yaml
-uses: actions/typescript-action@v1
+uses: actions/action-release-gem@v1
 with:
   milliseconds: 1000
 ```
