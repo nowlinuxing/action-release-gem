@@ -56,13 +56,6 @@ $ npm run build
 Run the tests :heavy_check_mark:  
 ```bash
 $ npm test
-
- PASS  ./index.test.js
-  ✓ throws invalid number (3ms)
-  ✓ wait 500 ms (504ms)
-  ✓ test runs (95ms)
-
-...
 ```
 
 ## Publish to a distribution branch
@@ -97,8 +90,6 @@ You can now validate the action by referencing the releases/v1 branch
 
 ```yaml
 uses: actions/action-release-gem@releases/v1
-with:
-  milliseconds: 1000
 ```
 
 See the [actions tab](https://github.com/actions/javascript-action/actions) for runs of this action! :rocket:
@@ -109,6 +100,4 @@ After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/
 
 ```yaml
 uses: actions/action-release-gem@v1
-with:
-  milliseconds: 1000
 ```
